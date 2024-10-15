@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mess Service Menu</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #343a40;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .menu-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            /* height: 80vh; */
+            height: 60vh;
+            overflow-y: scroll;
+        }
+
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            padding: 15px 0;
+            border-bottom: 1px solid #914343;
+        }
+
+        .menu-item h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #25282a;
+        }
+
+        .price {
+            font-size: 16px;
+            color: #ff0000;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .quantity-controls button {
+            background-color: #007bff;
+            color: rgb(255, 255, 255);
+            border: none;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin: 0 5px;
+        }
+
+        .quantity-controls button:hover {
+            background-color: #0056b3;
+        }
+
+        .quantity-controls span {
+            font-size: 18px;
+            min-width: 20px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        #total-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        #total-price {
+            font-size: 28px;
+            color: #ff0000;
+        }
+        .search-container {
+    display: flex;           /* Use Flexbox */
+    justify-content: center; /* Center children horizontally */
+    margin-bottom: 20px;    /* Space below the container */
+}
+
+#search {
+    padding: 10px;               /* Inner padding for the input */
+    width: 100%;                 /* Full width up to max-width */
+    max-width: 800px;           /* Maximum width */
+    font-size: 16px;            /* Font size */
+    border: 1px solid #ccc;     /* Border styling */
+    border-radius: 5px;         /* Rounded corners */
+}
+
+
+    </style>
+</head>
+<body>
+
+<h1>Baby Mess Menu</h1>
+
+<!-- Search Input -->
+<div class="search-container">
+
+<input type="text" id="search" placeholder="Search for menu items..." onkeyup="filterMenu()">
+</div>
+<div class="menu-container" id="menuContainer">
+    <!-- Dynamically Generated Menu Items -->
+    <div class="menu-item"><h3>Idly</h3><span class="price">₹7</span><div class="quantity-controls"><button onclick="updateQuantity('idly', -1)">-</button><span id="idly-qty">0</span><button onclick="updateQuantity('idly', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Dosai</h3><span class="price">₹15</span><div class="quantity-controls"><button onclick="updateQuantity('dosai', -1)">-</button><span id="dosai-qty">0</span><button onclick="updateQuantity('dosai', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Appam</h3><span class="price">₹15</span><div class="quantity-controls"><button onclick="updateQuantity('appam', -1)">-</button><span id="appam-qty">0</span><button onclick="updateQuantity('appam', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Coconut Milk (1 Packet)</h3><span class="price">₹15</span><div class="quantity-controls"><button onclick="updateQuantity('coconut-milk', -1)">-</button><span id="coconut-milk-qty">0</span><button onclick="updateQuantity('coconut-milk', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Chappathi</h3><span class="price">₹15</span><div class="quantity-controls"><button onclick="updateQuantity('chappathi', -1)">-</button><span id="chappathi-qty">0</span><button onclick="updateQuantity('chappathi', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Puri</h3><span class="price">₹15</span><div class="quantity-controls"><button onclick="updateQuantity('puri', -1)">-</button><span id="puri-qty">0</span><button onclick="updateQuantity('puri', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Utthapam</h3><span class="price">₹15</span><div class="quantity-controls"><button onclick="updateQuantity('utthapam', -1)">-</button><span id="utthapam-qty">0</span><button onclick="updateQuantity('utthapam', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Onion Uthappam</h3><span class="price">₹20</span><div class="quantity-controls"><button onclick="updateQuantity('onion-uthappam', -1)">-</button><span id="onion-uthappam-qty">0</span><button onclick="updateQuantity('onion-uthappam', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Porota</h3><span class="price">₹15</span><div class="quantity-controls"><button onclick="updateQuantity('porota', -1)">-</button><span id="porota-qty">0</span><button onclick="updateQuantity('porota', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Paniyaram (5 Pieces)</h3><span class="price">₹20</span><div class="quantity-controls"><button onclick="updateQuantity('paniyaram', -1)">-</button><span id="paniyaram-qty">0</span><button onclick="updateQuantity('paniyaram', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Sweet Paniyaram (4)</h3><span class="price">₹20</span><div class="quantity-controls"><button onclick="updateQuantity('sweet-paniyaram', -1)">-</button><span id="sweet-paniyaram-qty">0</span><button onclick="updateQuantity('sweet-paniyaram', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Tomato Rice</h3><span class="price">₹35</span><div class="quantity-controls"><button onclick="updateQuantity('tomato-rice', -1)">-</button><span id="tomato-rice-qty">0</span><button onclick="updateQuantity('tomato-rice', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Lemon Rice</h3><span class="price">₹35</span><div class="quantity-controls"><button onclick="updateQuantity('lemon-rice', -1)">-</button><span id="lemon-rice-qty">0</span><button onclick="updateQuantity('lemon-rice', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Puliyotharai</h3><span class="price">₹35</span><div class="quantity-controls"><button onclick="updateQuantity('puliyotharai', -1)">-</button><span id="puliyotharai-qty">0</span><button onclick="updateQuantity('puliyotharai', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Sambar Satham</h3><span class="price">₹40</span><div class="quantity-controls"><button onclick="updateQuantity('sambar-satham', -1)">-</button><span id="sambar-satham-qty">0</span><button onclick="updateQuantity('sambar-satham', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Paruppu Satham</h3><span class="price">₹45</span><div class="quantity-controls"><button onclick="updateQuantity('paruppu-satham', -1)">-</button><span id="paruppu-satham-qty">0</span><button onclick="updateQuantity('paruppu-satham', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Poriyal</h3><span class="price">₹5</span><div class="quantity-controls"><button onclick="updateQuantity('poriyal', -1)">-</button><span id="poriyal-qty">0</span><button onclick="updateQuantity('poriyal', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Kuttu</h3><span class="price">₹5</span><div class="quantity-controls"><button onclick="updateQuantity('kuttu', -1)">-</button><span id="kuttu-qty">0</span><button onclick="updateQuantity('kuttu', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Veg Meals</h3><span class="price">₹60</span><div class="quantity-controls"><button onclick="updateQuantity('veg-meals', -1)">-</button><span id="veg-meals-qty">0</span><button onclick="updateQuantity('veg-meals', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Non-Veg Meals</h3><span class="price">₹70</span><div class="quantity-controls"><button onclick="updateQuantity('non-veg-meals', -1)">-</button><span id="non-veg-meals-qty">0</span><button onclick="updateQuantity('non-veg-meals', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Kichadi</h3><span class="price">₹35</span><div class="quantity-controls"><button onclick="updateQuantity('kichadi', -1)">-</button><span id="kichadi-qty">0</span><button onclick="updateQuantity('kichadi', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Egg Gravy</h3><span class="price">₹20</span><div class="quantity-controls"><button onclick="updateQuantity('egg-gravy', -1)">-</button><span id="egg-gravy-qty">0</span><button onclick="updateQuantity('egg-gravy', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Meen Thokku</h3><span class="price">₹30</span><div class="quantity-controls"><button onclick="updateQuantity('meen-thokku', -1)">-</button><span id="meen-thokku-qty">0</span><button onclick="updateQuantity('meen-thokku', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Ghee Rice</h3><span class="price">₹55</span><div class="quantity-controls"><button onclick="updateQuantity('ghee-rice', -1)">-</button><span id="ghee-rice-qty">0</span><button onclick="updateQuantity('ghee-rice', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Kuska</h3><span class="price">₹55</span><div class="quantity-controls"><button onclick="updateQuantity('kuska', -1)">-</button><span id="kuska-qty">0</span><button onclick="updateQuantity('kuska', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Empty Biriyani</h3><span class="price">₹70</span><div class="quantity-controls"><button onclick="updateQuantity('empty-biriyani', -1)">-</button><span id="empty-biriyani-qty">0</span><button onclick="updateQuantity('empty-biriyani', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Chicken Gravy</h3><span class="price">₹80</span><div class="quantity-controls"><button onclick="updateQuantity('chicken-gravy', -1)">-</button><span id="chicken-gravy-qty">0</span><button onclick="updateQuantity('chicken-gravy', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Mutton Gravy</h3><span class="price">₹120</span><div class="quantity-controls"><button onclick="updateQuantity('mutton-gravy', -1)">-</button><span id="mutton-gravy-qty">0</span><button onclick="updateQuantity('mutton-gravy', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Chicken Biryani</h3><span class="price">₹110</span><div class="quantity-controls"><button onclick="updateQuantity('chicken-biryani', -1)">-</button><span id="chicken-biryani-qty">0</span><button onclick="updateQuantity('chicken-biryani', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Chicken Chilli</h3><span class="price">₹80</span><div class="quantity-controls"><button onclick="updateQuantity('chicken-chilli', -1)">-</button><span id="chicken-chilli-qty">0</span><button onclick="updateQuantity('chicken-chilli', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Full Boil</h3><span class="price">₹13</span><div class="quantity-controls"><button onclick="updateQuantity('full-boil', -1)">-</button><span id="full-boil-qty">0</span><button onclick="updateQuantity('full-boil', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Omlette</h3><span class="price">₹15</span><div class="quantity-controls"><button onclick="updateQuantity('omlette', -1)">-</button><span id="omlette-qty">0</span><button onclick="updateQuantity('omlette', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Half Boil</h3><span class="price">₹15</span><div class="quantity-controls"><button onclick="updateQuantity('half-boil', -1)">-</button><span id="half-boil-qty">0</span><button onclick="updateQuantity('half-boil', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Muttai Dosai</h3><span class="price">₹25</span><div class="quantity-controls"><button onclick="updateQuantity('muttai-dosai', -1)">-</button><span id="muttai-dosai-qty">0</span><button onclick="updateQuantity('muttai-dosai', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Podi Dosai</h3><span class="price">₹25</span><div class="quantity-controls"><button onclick="updateQuantity('podi-dosai', -1)">-</button><span id="podi-dosai-qty">0</span><button onclick="updateQuantity('podi-dosai', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Onion Dosai</h3><span class="price">₹20</span><div class="quantity-controls"><button onclick="updateQuantity('onion-dosai', -1)">-</button><span id="onion-dosai-qty">0</span><button onclick="updateQuantity('onion-dosai', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Masala Dosai</h3><span class="price">₹35</span><div class="quantity-controls"><button onclick="updateQuantity('masala-dosai', -1)">-</button><span id="masala-dosai-qty">0</span><button onclick="updateQuantity('masala-dosai', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Ragi Dosai</h3><span class="price">₹25</span><div class="quantity-controls"><button onclick="updateQuantity('ragi-dosai', -1)">-</button><span id="ragi-dosai-qty">0</span><button onclick="updateQuantity('ragi-dosai', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Pongal</h3><span class="price">₹35</span><div class="quantity-controls"><button onclick="updateQuantity('pongal', -1)">-</button><span id="pongal-qty">0</span><button onclick="updateQuantity('pongal', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Podi Idly</h3><span class="price">₹9</span><div class="quantity-controls"><button onclick="updateQuantity('podi-idly', -1)">-</button><span id="podi-idly-qty">0</span><button onclick="updateQuantity('podi-idly', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Vadai</h3><span class="price">₹8</span><div class="quantity-controls"><button onclick="updateQuantity('vadai', -1)">-</button><span id="vadai-qty">0</span><button onclick="updateQuantity('vadai', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Adai</h3><span class="price">₹25</span><div class="quantity-controls"><button onclick="updateQuantity('adai', -1)">-</button><span id="adai-qty">0</span><button onclick="updateQuantity('adai', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Fish Fry</h3><span class="price">₹20</span><div class="quantity-controls"><button onclick="updateQuantity('fish-fry', -1)">-</button><span id="fish-fry-qty">0</span><button onclick="updateQuantity('fish-fry', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Ghee Roast</h3><span class="price">₹40</span><div class="quantity-controls"><button onclick="updateQuantity('ghee-roast', -1)">-</button><span id="ghee-roast-qty">0</span><button onclick="updateQuantity('ghee-roast', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Muttai Parotta</h3><span class="price">₹60</span><div class="quantity-controls"><button onclick="updateQuantity('muttai-parotta', -1)">-</button><span id="muttai-parotta-qty">0</span><button onclick="updateQuantity('muttai-parotta', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Muttai Lappa</h3><span class="price">₹60</span><div class="quantity-controls"><button onclick="updateQuantity('muttai-lappa', -1)">-</button><span id="muttai-lappa-qty">0</span><button onclick="updateQuantity('muttai-lappa', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Vichi Parotta</h3><span class="price">₹20</span><div class="quantity-controls"><button onclick="updateQuantity('vichi-parotta', -1)">-</button><span id="vichi-parotta-qty">0</span><button onclick="updateQuantity('vichi-parotta', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Ravai Dosai</h3><span class="price">₹40</span><div class="quantity-controls"><button onclick="updateQuantity('ravai-dosai', -1)">-</button><span id="ravai-dosai-qty">0</span><button onclick="updateQuantity('ravai-dosai', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Carrot Dosai</h3><span class="price">₹35</span><div class="quantity-controls"><button onclick="updateQuantity('carrot-dosai', -1)">-</button><span id="carrot-dosai-qty">0</span><button onclick="updateQuantity('carrot-dosai', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Puthina Dosai</h3><span class="price">₹30</span><div class="quantity-controls"><button onclick="updateQuantity('puthina-dosai', -1)">-</button><span id="puthina-dosai-qty">0</span><button onclick="updateQuantity('puthina-dosai', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Roast</h3><span class="price">₹25</span><div class="quantity-controls"><button onclick="updateQuantity('roast', -1)">-</button><span id="roast-qty">0</span><button onclick="updateQuantity('roast', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Mysore Masala Dosai</h3><span class="price">₹60</span><div class="quantity-controls"><button onclick="updateQuantity('mysore-masala-dosai', -1)">-</button><span id="mysore-masala-dosai-qty">0</span><button onclick="updateQuantity('mysore-masala-dosai', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Kothu Parota</h3><span class="price">₹50</span><div class="quantity-controls"><button onclick="updateQuantity('kothu-parota', -1)">-</button><span id="kothu-parota-qty">0</span><button onclick="updateQuantity('kothu-parota', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Veg Fried Rice</h3><span class="price">₹50</span><div class="quantity-controls"><button onclick="updateQuantity('veg-fried-rice', -1)">-</button><span id="veg-fried-rice-qty">0</span><button onclick="updateQuantity('veg-fried-rice', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Egg Rice</h3><span class="price">₹60</span><div class="quantity-controls"><button onclick="updateQuantity('egg-rice', -1)">-</button><span id="egg-rice-qty">0</span><button onclick="updateQuantity('egg-rice', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Chicken Fried Rice</h3><span class="price">₹80</span><div class="quantity-controls"><button onclick="updateQuantity('chicken-fried-rice', -1)">-</button><span id="chicken-fried-rice-qty">0</span><button onclick="updateQuantity('chicken-fried-rice', 1)">+</button></div></div>
+    
+</div>
+
+<div id="total-container">
+    <p>Total Amount: <span id="total-price">₹0</span></p>
+</div>
+
+<script>
+    let totalPrice = 0;
+    const menuItems = {
+    idly: { price: 7, qty: 0 },
+    dosai: { price: 15, qty: 0 },
+    appam: { price: 15, qty: 0 },
+    "coconut-milk": { price: 15, qty: 0 },
+    chappathi: { price: 15, qty: 0 },
+    puri: { price: 15, qty: 0 },
+    utthapam: { price: 15, qty: 0 },
+    "onion-uthappam": { price: 20, qty: 0 },
+    porota: { price: 15, qty: 0 },
+    paniyaram: { price: 20, qty: 0 }, // (5 pieces)
+    "sweet-paniyaram": { price: 20, qty: 0 }, // (4 pieces)
+    "tomato-rice": { price: 35, qty: 0 },
+    "lemon-rice": { price: 35, qty: 0 },
+    puliyotharai: { price: 35, qty: 0 },
+    "sambar-satham": { price: 40, qty: 0 },
+    "paruppu-satham": { price: 45, qty: 0 },
+    poriyal: { price: 5, qty: 0 },
+    kuttu: { price: 5, qty: 0 },
+    "veg-meals": { price: 60, qty: 0 },
+    "non-veg-meals": { price: 70, qty: 0 },
+    kichadi: { price: 35, qty: 0 },
+    "egg-gravy": { price: 20, qty: 0 },
+    "meen-thokku": { price: 30, qty: 0 },
+    "ghee-rice": { price: 55, qty: 0 },
+    kuska: { price: 55, qty: 0 },
+    "empty-biriyani": { price: 70, qty: 0 },
+    "chicken-gravy": { price: 80, qty: 0 },
+    "mutton-gravy": { price: 120, qty: 0 },
+    "chicken-biryani": { price: 110, qty: 0 },
+    "chicken-chilli": { price: 80, qty: 0 },
+    "full-boil": { price: 13, qty: 0 },
+    omlette: { price: 15, qty: 0 },
+    "half-boil": { price: 15, qty: 0 },
+    "muttai-dosai": { price: 25, qty: 0 },
+    "podi-dosai": { price: 25, qty: 0 },
+    "onion-dosai": { price: 20, qty: 0 },
+    "masala-dosai": { price: 35, qty: 0 },
+    "ragi-dosai": { price: 25, qty: 0 },
+    pongal: { price: 35, qty: 0 },
+    "podi-idly": { price: 9, qty: 0 },
+    vadai: { price: 8, qty: 0 },
+    adai: { price: 25, qty: 0 },
+    "fish-fry": { price: 20, qty: 0 },
+    "ghee-roast": { price: 40, qty: 0 },
+    "muttai-parotta": { price: 60, qty: 0 },
+    "muttai-lappa": { price: 60, qty: 0 },
+    "vichi-parotta": { price: 20, qty: 0 },
+    "ravai-dosai": { price: 40, qty: 0 },
+    "carrot-dosai": { price: 35, qty: 0 },
+    "puthina-dosai": { price: 30, qty: 0 },
+    roast: { price: 25, qty: 0 },
+    "mysore-masala-dosai": { price: 60, qty: 0 },
+    "kothu-parota": { price: 50, qty: 0 },
+    "veg-fried-rice": { price: 50, qty: 0 },
+    "egg-rice": { price: 60, qty: 0 },
+    "chicken-fried-rice": { price: 80, qty: 0 }
+};
+
+    function updateQuantity(item, change) {
+        const itemData = menuItems[item];
+        itemData.qty = Math.max(0, itemData.qty + change);
+        document.getElementById(`${item}-qty`).innerText = itemData.qty;
+        updateTotal();
+    }
+
+    function updateTotal() {
+        let total = 0;
+        for (const item in menuItems) {
+            total += menuItems[item].price * menuItems[item].qty;
+        }
+        document.getElementById("total-price").innerText = `₹${total}`;
+    }
+
+
+    function filterMenu() {
+        const searchValue = document.getElementById('search').value.toLowerCase();
+        const menuItems = document.querySelectorAll('.menu-item');
+
+        menuItems.forEach(item => {
+            const itemName = item.querySelector('h3').innerText.toLowerCase();
+            if (itemName.includes(searchValue)) {
+                item.style.display = 'flex';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

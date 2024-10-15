@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mess Service Menu</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #343a40;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .menu-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            height: 80vh;
+            overflow-y: auto; /* Changed from scroll to auto */
+        }
+
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            padding: 15px 0;
+            border-bottom: 1px solid #914343;
+        }
+
+        .menu-item h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #25282a;
+        }
+
+        .price {
+            font-size: 16px;
+            color: #ff0000;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .quantity-controls button {
+            background-color: #007bff;
+            color: rgb(255, 255, 255);
+            border: none;
+            padding: 8px 12px; /* Increased padding for better touch targets */
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin: 0 5px;
+            transition: background-color 0.3s; /* Added transition effect */
+        }
+
+        .quantity-controls button:hover {
+            background-color: #0056b3;
+        }
+
+        .quantity-controls span {
+            font-size: 18px;
+            min-width: 25px; /* Increased min width for better visibility */
+            text-align: center;
+            display: inline-block;
+        }
+
+        #total-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        #total-price {
+            font-size: 28px;
+            color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Mess Service Menu</h1>
+
+<div class="menu-container">
+    <!-- Dynamically Generated Menu Items -->
+    <div class="menu-item"><h3>Idly</h3><span class="price">₹7</span><div class="quantity-controls"><button onclick="updateQuantity('idly', -1)">-</button><span id="idly-qty">0</span><button onclick="updateQuantity('idly', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Dosai</h3><span class="price">₹15</span><div class="quantity-controls"><button onclick="updateQuantity('dosai', -1)">-</button><span id="dosai-qty">0</span><button onclick="updateQuantity('dosai', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Appam</h3><span class="price">₹15</span><div class="quantity-controls"><button onclick="updateQuantity('appam', -1)">-</button><span id="appam-qty">0</span><button onclick="updateQuantity('appam', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Coconut Milk (1 packet)</h3><span class="price">₹15</span><div class="quantity-controls"><button onclick="updateQuantity('coconut_milk', -1)">-</button><span id="coconut_milk-qty">0</span><button onclick="updateQuantity('coconut_milk', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Chappathi</h3><span class="price">₹15</span><div class="quantity-controls"><button onclick="updateQuantity('chappathi', -1)">-</button><span id="chappathi-qty">0</span><button onclick="updateQuantity('chappathi', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Puri</h3><span class="price">₹15</span><div class="quantity-controls"><button onclick="updateQuantity('puri', -1)">-</button><span id="puri-qty">0</span><button onclick="updateQuantity('puri', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Utthapam</h3><span class="price">₹15</span><div class="quantity-controls"><button onclick="updateQuantity('utthapam', -1)">-</button><span id="utthapam-qty">0</span><button onclick="updateQuantity('utthapam', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Onion Utthapam</h3><span class="price">₹20</span><div class="quantity-controls"><button onclick="updateQuantity('onion_utthapam', -1)">-</button><span id="onion_utthapam-qty">0</span><button onclick="updateQuantity('onion_utthapam', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Porota</h3><span class="price">₹15</span><div class="quantity-controls"><button onclick="updateQuantity('porota', -1)">-</button><span id="porota-qty">0</span><button onclick="updateQuantity('porota', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Paniyaram (5 pieces)</h3><span class="price">₹20</span><div class="quantity-controls"><button onclick="updateQuantity('paniyaram', -1)">-</button><span id="paniyaram-qty">0</span><button onclick="updateQuantity('paniyaram', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Sweet Paniyaram (4 pieces)</h3><span class="price">₹20</span><div class="quantity-controls"><button onclick="updateQuantity('sweet_paniyaram', -1)">-</button><span id="sweet_paniyaram-qty">0</span><button onclick="updateQuantity('sweet_paniyaram', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Tomato Rice</h3><span class="price">₹35</span><div class="quantity-controls"><button onclick="updateQuantity('tomato_rice', -1)">-</button><span id="tomato_rice-qty">0</span><button onclick="updateQuantity('tomato_rice', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Lemon Rice</h3><span class="price">₹35</span><div class="quantity-controls"><button onclick="updateQuantity('lemon_rice', -1)">-</button><span id="lemon_rice-qty">0</span><button onclick="updateQuantity('lemon_rice', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Puliyotharai</h3><span class="price">₹35</span><div class="quantity-controls"><button onclick="updateQuantity('puliyotharai', -1)">-</button><span id="puliyotharai-qty">0</span><button onclick="updateQuantity('puliyotharai', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Sambar Satham</h3><span class="price">₹40</span><div class="quantity-controls"><button onclick="updateQuantity('sambar_satham', -1)">-</button><span id="sambar_satham-qty">0</span><button onclick="updateQuantity('sambar_satham', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Paruppu Satham</h3><span class="price">₹45</span><div class="quantity-controls"><button onclick="updateQuantity('paruppu_satham', -1)">-</button><span id="paruppu_satham-qty">0</span><button onclick="updateQuantity('paruppu_satham', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Poriyal</h3><span class="price">₹5</span><div class="quantity-controls"><button onclick="updateQuantity('poriyal', -1)">-</button><span id="poriyal-qty">0</span><button onclick="updateQuantity('poriyal', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Chutney</h3><span class="price">₹5</span><div class="quantity-controls"><button onclick="updateQuantity('chutney', -1)">-</button><span id="chutney-qty">0</span><button onclick="updateQuantity('chutney', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Curd</h3><span class="price">₹5</span><div class="quantity-controls"><button onclick="updateQuantity('curd', -1)">-</button><span id="curd-qty">0</span><button onclick="updateQuantity('curd', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Sweet</h3><span class="price">₹10</span><div class="quantity-controls"><button onclick="updateQuantity('sweet', -1)">-</button><span id="sweet-qty">0</span><button onclick="updateQuantity('sweet', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Fried Rice</h3><span class="price">₹40</span><div class="quantity-controls"><button onclick="updateQuantity('fried_rice', -1)">-</button><span id="fried_rice-qty">0</span><button onclick="updateQuantity('fried_rice', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Fried Noodles</h3><span class="price">₹40</span><div class="quantity-controls"><button onclick="updateQuantity('fried_noodles', -1)">-</button><span id="fried_noodles-qty">0</span><button onclick="updateQuantity('fried_noodles', 1)">+</button></div></div>
+    <div class="menu-item"><h3>French Fries</h3><span class="price">₹20</span><div class="quantity-controls"><button onclick="updateQuantity('french_fries', -1)">-</button><span id="french_fries-qty">0</span><button onclick="updateQuantity('french_fries', 1)">+</button></div></div>
+    <div class="menu-item"><h3>Drinks</h3><span class="price">₹20</span><div class="quantity-controls"><button onclick="updateQuantity('drinks', -1)">-</button><span id="drinks-qty">0</span><button onclick="updateQuantity('drinks', 1)">+</button></div></div>
+</div>
+
+<div id="total-container">
+    <h2>Total Price:</h2>
+    <span id="total-price">₹0</span>
+</div>
+
+<script>
+    const menuItems = {
+        idly: { price: 7, qty: 0 },
+        dosai: { price: 15, qty: 0 },
+        appam: { price: 15, qty: 0 },
+        coconut_milk: { price: 15, qty: 0 },
+        chappathi: { price: 15, qty: 0 },
+        puri: { price: 15, qty: 0 },
+        utthapam: { price: 15, qty: 0 },
+        onion_utthapam: { price: 20, qty: 0 },
+        porota: { price: 15, qty: 0 },
+        paniyaram: { price: 20, qty: 0 },
+        sweet_paniyaram: { price: 20, qty: 0 },
+        tomato_rice: { price: 35, qty: 0 },
+        lemon_rice: { price: 35, qty: 0 },
+        puliyotharai: { price: 35, qty: 0 },
+        sambar_satham: { price: 40, qty: 0 },
+        paruppu_satham: { price: 45, qty: 0 },
+        poriyal: { price: 5, qty: 0 },
+        chutney: { price: 5, qty: 0 },
+        curd: { price: 5, qty: 0 },
+        sweet: { price: 10, qty: 0 },
+        fried_rice: { price: 40, qty: 0 },
+        fried_noodles: { price: 40, qty: 0 },
+        french_fries: { price: 20, qty: 0 },
+        drinks: { price: 20, qty: 0 }
+    };
+
+    function updateQuantity(item, change) {
+        const itemData = menuItems[item];
+        itemData.qty = Math.max(0, itemData.qty + change);
+        document.getElementById(`${item}-qty`).innerText = itemData.qty;
+        updateTotal();
+    }
+
+    function updateTotal() {
+        let total = 0;
+        for (const item in menuItems) {
+            total += menuItems[item].price * menuItems[item].qty;
+        }
+        document.getElementById("total-price").innerText = `₹${total}`;
+    }
+</script>
+
+</body>
+</html>
